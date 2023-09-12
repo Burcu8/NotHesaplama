@@ -10,6 +10,8 @@ import SwiftUI
 struct NoItemView: View {
     @State var animate: Bool = false
     let secondaryAccentColor = Color("SecondaryAccentColor")
+    @State private var showsheet: Bool = false
+    
     var body: some View {
         ScrollView{
             VStack(spacing: 10) {
@@ -18,18 +20,16 @@ struct NoItemView: View {
                     .fontWeight(.semibold)
                 Text("Hadi ders ekleyelim☺️")
                     .padding(.bottom, 20)
-                NavigationLink(
-                    destination: AddClassView(),
-                    label: {
-                        Text("Add Something 🥳")
-                            .foregroundColor(.white)
-                            .font(.headline)
-                            .frame(height: 55)
-                            .frame(maxWidth: .infinity)
-                            .background(animate ? secondaryAccentColor : Color.accentColor)
-                            .background(Color.accentColor)
-                            .cornerRadius(10)
-                    })
+                Button("Add Something 🥳") {
+                    showsheet.toggle()
+                    }
+                .foregroundColor(.white)
+                .font(.headline)
+                .frame(height: 55)
+                .frame(maxWidth: .infinity)
+                .background(animate ? secondaryAccentColor : Color.accentColor)
+                .background(Color.accentColor)
+                .cornerRadius(10)
                 .padding(.horizontal, animate ? 30 : 50)
                 .shadow(
                     color: animate ? secondaryAccentColor.opacity(0.7) :
@@ -39,6 +39,9 @@ struct NoItemView: View {
                     y: animate ? 50 : 30 )
                 .scaleEffect(animate ? 1.1 : 1.0)
                 .offset(y: animate ? -7 : 0)
+                .sheet(isPresented: $showsheet) {
+                    AddClassView()
+                }.presentationDetents([.fraction(0.2), .medium])
                 
             }
             .frame(maxWidth: 400)
@@ -47,6 +50,7 @@ struct NoItemView: View {
             .onAppear(perform: addAnimation)
         }
     }
+
     
     func addAnimation() {
         guard !animate else { return }
