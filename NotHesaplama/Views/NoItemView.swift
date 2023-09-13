@@ -20,7 +20,7 @@ struct NoItemView: View {
                     .fontWeight(.semibold)
                 Text("Hadi ders ekleyelim☺️")
                     .padding(.bottom, 20)
-                Button("Add Something 🥳") {
+                Button("Ders Ekle 🥳") {
                     showsheet.toggle()
                     }
                 .foregroundColor(.white)
